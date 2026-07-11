@@ -29,5 +29,5 @@ npm run dev
 \`\`\`
 
 ## Screenshot
+## Screenshot
 ![Job Application Tracker Dashboard](./screenshots/screen2.png)
-
