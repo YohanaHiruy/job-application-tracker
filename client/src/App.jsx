@@ -19,17 +19,26 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios.post('http://localhost:5000/api/applications', { company, role, status })
+      .then(() => {
+        fetchApplications();
+        setCompany('');
+        setRole('');
+        setStatus('applied');
+      })
+      .catch(err => console.error('Error adding application:', err));
+  };
 
-    axios.post('http://localhost:5000/api/applications', {
-      company,
-      role,
-      status
-    }).then(() => {
-      fetchApplications();
-      setCompany('');
-      setRole('');
-      setStatus('applied');
-    }).catch(err => console.error('Error adding application:', err));
+  const handleStatusChange = (id, newStatus) => {
+    axios.put(`http://localhost:5000/api/applications/${id}`, { status: newStatus })
+      .then(() => fetchApplications())
+      .catch(err => console.error('Error updating application:', err));
+  };
+
+  const handleDelete = (id) => {
+    axios.delete(`http://localhost:5000/api/applications/${id}`)
+      .then(() => fetchApplications())
+      .catch(err => console.error('Error deleting application:', err));
   };
 
   const statusColors = {
@@ -44,11 +53,12 @@ function App() {
       <div className="max-w-2xl mx-auto">
 
         <h1 className="text-3xl font-bold mb-1 bg-gradient-to-r from-indigo-600 to-purple-500 bg-clip-text text-transparent transition-all duration-300 hover:tracking-wide cursor-default">
-  Job Application Tracker
-</h1>
-        <p className="text-slate-500 mb-8 animate-[fadeIn_1s_ease-in]">
-  From applied to offer — all in one place.
-</p>
+          Job Application Tracker
+        </h1>
+        <p className="text-slate-500 mb-8 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-indigo-500 inline-block"></span>
+          From applied to offer — all in one place.
+        </p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
@@ -97,7 +107,7 @@ function App() {
           <div className="space-y-3">
             {applications.map(app => (
               <div
-                key={app.id}
+                key={app._id}
                 className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 flex items-center justify-between"
               >
                 <div>
@@ -105,9 +115,26 @@ function App() {
                   <p className="text-slate-500 text-sm">{app.role}</p>
                   <p className="text-slate-400 text-xs mt-1">Applied: {app.dateApplied}</p>
                 </div>
-                <span className={`text-xs font-medium px-3 py-1 rounded-full capitalize ${statusColors[app.status]}`}>
-                  {app.status}
-                </span>
+
+                <div className="flex items-center gap-3">
+                  <select
+                    value={app.status}
+                    onChange={(e) => handleStatusChange(app._id, e.target.value)}
+                    className={`text-xs font-medium px-3 py-1 rounded-full capitalize border-none focus:outline-none ${statusColors[app.status]}`}
+                  >
+                    <option value="applied">Applied</option>
+                    <option value="interview">Interview</option>
+                    <option value="offer">Offer</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+
+                  <button
+                    onClick={() => handleDelete(app._id)}
+                    className="text-slate-400 hover:text-red-500 transition-colors text-sm font-medium"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             ))}
           </div>
