@@ -60,7 +60,7 @@ function App() {
           From applied to offer — all in one place.
         </p>
 
-        {/* Form */}
+        {}
         <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <input
@@ -100,7 +100,7 @@ function App() {
           </div>
         </form>
 
-        {/* List */}
+        {}
         {applications.length === 0 ? (
           <p className="text-slate-400 text-center">No applications yet.</p>
         ) : (

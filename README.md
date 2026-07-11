@@ -10,7 +10,7 @@ A full-stack MERN app to track job applications — company, role, status, and d
 ## Tech Stack
 - **Frontend:** React, Vite, Tailwind CSS, Axios
 - **Backend:** Node.js, Express
-- **Database:** MongoDB (coming soon)
+- **Database:** MongoDB 
 
 ## Getting Started
 
@@ -29,7 +29,5 @@ npm run dev
 \`\`\`
 
 ## Screenshot
-![Job Application Tracker Dashboard](./screenshots/job.png)
+![Job Application Tracker Dashboard](./screenshots/screen2.png)
 
-## Status
-🚧 In progress — MongoDB integration and edit/delete features coming next.
